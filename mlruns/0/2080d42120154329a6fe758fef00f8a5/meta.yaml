@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/ivanosipchyk/dev/studies/end-to-end-ml-project/mlruns/0/2080d42120154329a6fe758fef00f8a5/artifacts
+end_time: 1720525530272
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 2080d42120154329a6fe758fef00f8a5
+run_name: victorious-deer-883
+run_uuid: 2080d42120154329a6fe758fef00f8a5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1720525528801
+status: 3
+tags: []
+user_id: ivanosipchyk
