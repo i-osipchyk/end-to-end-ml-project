@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 import mlflow
 import mlflow.sklearn
 import joblib
-
+from pathlib import Path
 from mlProject.utils.common import save_json
 
 
