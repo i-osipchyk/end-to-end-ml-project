@@ -1,1 +1,3 @@
-key: val
+SVC:
+  gamma: 0.1
+  C: 10
