@@ -1,5 +1,5 @@
 from scipy.special import boxcox
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, LabelEncoder
 from imblearn.over_sampling import SMOTE
 import joblib
 import pandas as pd
@@ -17,6 +17,7 @@ class DataTransformation:
         self.boxcox_lambda = 0.05
         self.scaler = StandardScaler()
         self.oversampler = SMOTE(random_state=42)
+        self.target = 'quality'
 
     def read_data(self) -> pd.DataFrame:
         logger.info("Reading the data")
@@ -32,6 +33,24 @@ class DataTransformation:
             data[column] = boxcox(data[column] + 1e-6, self.boxcox_lambda)
 
         logger.info("Removing skewness finished")
+
+        return data
+
+    def encode_labels(self, data: pd.DataFrame) -> pd.DataFrame:
+
+        label_mapping = {
+            3: 'bad',
+            4: 'bad',
+            5: 'fair',
+            6: 'fair',
+            7: 'good',
+            8: 'good'
+        }
+
+        data[self.target] = data[self.target].map(label_mapping)
+
+        encoder = LabelEncoder()
+        data[self.target] = encoder.fit_transform(data[self.target])
 
         return data
 
@@ -91,16 +110,16 @@ class DataTransformation:
         return data_dict
 
     def save_data(self, data_dict: dict):
-        logger.info(f"Saving data to {self.config.root_dir}")
         for key, value in data_dict.items():
             pd.DataFrame(value).to_csv(os.path.join(self.config.root_dir, f"{key}.csv"), index=False)
 
-        logger.info("Data was successfully saved")
+        logger.info("Split data into train, val and test sets")
 
     def transform_data(self):
         data = self.read_data()
         data = self.remove_skewness(data)
+        data = self.encode_labels(data)
         data_dict = self.train_test_split(data)
         data_dict = self.scale_data(data_dict)
-        data_dict = self.oversample(data_dict)
+        # data_dict = self.oversample(data_dict)
         self.save_data(data_dict)
