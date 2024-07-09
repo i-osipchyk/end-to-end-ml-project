@@ -31,3 +31,13 @@ class ModelTrainerConfig:
     model_name: str
     gamma: float
     C: float
+
+
+@dataclass(frozen=True)
+class ModelEvaluationConfig:
+    root_dir: Path
+    data_path: Path
+    model_path: Path
+    all_params: dict
+    metric_file_name: Path
+    mlflow_uri: str
